@@ -8,6 +8,7 @@ import {
 	QToolbar,
 	QToolbarTitle,
 	QInput,
+	QField,
 	QBtn
 
 } from 'quasar'
@@ -16,7 +17,7 @@ export default {
 
 	name: 'Login',
 
-	components: { QLayout, QToolbar, QToolbarTitle, QInput, QBtn },
+	components: { QLayout, QToolbar, QToolbarTitle, QInput, QField, QBtn },
 
 	data () {
 
@@ -24,7 +25,9 @@ export default {
 
 			username: null,
 			password: null,
-			dados: null
+			dados: null,
+
+			labelLogin: 'Login'
 
 		}
 
@@ -34,7 +37,7 @@ export default {
 
 	computed: {
 
-		...mapGetters(['getOauth']),
+		...mapGetters(['getOauth', 'getToken', 'getErrorLogin']),
 
 		isValid () {
 
@@ -46,7 +49,7 @@ export default {
 
 	methods: {
 
-		...mapActions(['authorize']),
+		...mapActions(['authorize', 'setMessage']),
 
 		login () {
 
@@ -54,13 +57,31 @@ export default {
 			this.dados.username = this.username
 			this.dados.password = this.password
 
+			this.labelLogin = 'Aguarde...'
+
+			this.sendMessage()
+
 			this.authorize(this.dados)
 
 				.then(() => {
 
-					alert('logado com sucesso !')
+					this.labelLogin = 'Login'
+
+					if (this.getToken !== null) {
+
+						this.$router.push({ path: 'Inicio' })
+
+					}
 
 				})
+
+		},
+
+		sendMessage () {
+
+			let obj = { mutation: 'setErrorLogin', message: null }
+
+			this.setMessage(obj)
 
 		}
 
@@ -90,7 +111,9 @@ export default {
 
 		<q-input v-model="password" type="password" :before="[{icon: 'vpn_key', handler () {}}]" />
 
-		<q-btn color="primary" :disable="!isValid" class="full-width" @click="login"> logar </q-btn>
+		<q-btn color="primary" :disable="!isValid" class="full-width" @click="login"> {{labelLogin}} </q-btn>
+
+		<q-field v-if="getErrorLogin !== null" icon="error" :label="getErrorLogin"></q-field>
 
 	</q-layout>
 

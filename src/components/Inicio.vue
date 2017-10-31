@@ -1,5 +1,7 @@
 <script>
 
+import { mapActions, mapGetters } from 'vuex'
+
 import {
   QLayout,
   QToolbar,
@@ -12,7 +14,8 @@ import {
   QField,
   QUploader,
   QInput,
-  QBtn
+  QBtn,
+  Alert
 
 } from 'quasar'
 
@@ -56,37 +59,81 @@ export default {
 
   	return {
 
-      nomeAlbum: null,
+      album: {
 
-      select: 1,
+        titulo: null
 
-      options: [
+      },
 
-        {
-          label: 'Album 1',
-          value: 1
-        },
-        {
-          label: 'Album 2',
-          value: 2
+      select: 1
 
-        },
-        {
-          label: 'Album 3',
-          value: 3
-        }
-      ]
     }
+
+  },
+
+  props: {},
+
+  computed: {
+
+    ...mapGetters(['getAlbum'])
 
   },
 
   methods: {
 
+    ...mapActions(['saveAlbum', 'getAllAlbum', 'removeAlbum', 'updateAlbum']),
+
     save () {
 
-      alert(this.nomeAlbum)
+      this.saveAlbum(this.album)
+
+      .then(() => {
+
+        Alert.create({ html: 'Dados salvos com sucesso', color: 'positive' })
+
+        this.album.titulo = null
+
+        this.getAllAlbum()
+
+      })
+
+    },
+
+    remove () {
+
+      this.removeAlbum(this.select)
+
+      .then(() => {
+
+        Alert.create({ html: 'Album excluido com sucesso', color: 'positive' })
+
+        this.getAllAlbum()
+
+      })
+
+    },
+
+    edit () {
+
+      let data = { codigo: this.select, album: this.album }
+
+      this.updateAlbum(data)
+
+      .then(() => {
+
+        Alert.create({ html: 'Album alterado com sucesso', color: 'positive' })
+
+        this.getAllAlbum()
+
+      })
 
     }
+
+  },
+
+  mounted () {
+
+    this.getAllAlbum()
 
   }
 
@@ -115,21 +162,19 @@ export default {
 
         <hr>
 
-        <q-select
-          stack-label=""
-          v-model="select"
-          :options="options"
-        />
+        <q-select stack-label="" v-model="select" :options="getAlbum" />
 
-        <q-input stack-label="Titulo" v-model="nomeAlbum"/>
+        <q-input stack-label="Titulo" v-model="album.titulo"/>
 
-        <q-btn color="primary" icon="add_circle" @click="save">
+        <div class="row box-button">
 
-           Salvar album
+          <q-btn round color="primary" icon="add_circle" @click="save" />
 
-        </q-btn>
+          <q-btn round color="secondary" icon="mode_edit" @click="edit" />
 
+          <q-btn round color="negative" icon="delete" @click="remove" />
 
+        </div>
 
 
       </q-tab-pane>
@@ -140,11 +185,7 @@ export default {
 
         <hr>
 
-        <q-select
-          stack-label="Escolha o album para upload da imagem"
-          v-model="select"
-          :options="options"
-        />
+        <q-select stack-label="Escolha o album para upload da imagem" v-model="select" :options="getAlbum"/>
 
         <q-field icon="add_a_photo" helper="">
 
@@ -162,5 +203,12 @@ export default {
 </template>
 
 <style lang="stylus">
+
+.box-button {
+
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+}
 
 </style>

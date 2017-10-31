@@ -25,14 +25,19 @@ export default new VueRouter({
    */
 
   mode: 'hash',
+
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    { path: '/', component: load('login') },
+
+    { path: '/', component: load('Inicio') },
+
+    { path: '/inicio', component: load('Inicio') },
 
     // Always leave this last one
 
     { path: '*', component: load('Error404') } // Not found
 
   ]
+
 })

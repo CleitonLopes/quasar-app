@@ -41,7 +41,9 @@ module.exports = {
 
     'no-mixed-spaces-and-tabs': 0,
 
-    'eqeqeq': 0
+    'eqeqeq': 0,
+
+    'object-property-newline': 0
 
   }
 

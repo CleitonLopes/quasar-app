@@ -71,3 +71,19 @@ export const serviceUpdateAlbum = (data) => {
 	})
 
 }
+
+// Galeria
+
+export const serviceGetAllGaleria = (data) => {
+
+	return http.get(`${config.URI}/api/galeria`, {
+
+		headers: {
+
+			'Authorization': store.token
+
+		}
+
+	})
+
+}

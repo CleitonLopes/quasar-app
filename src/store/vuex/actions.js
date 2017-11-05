@@ -1,6 +1,6 @@
 import * as types from './mutations-types'
 
-import { serviceAuthorize, serviceGetAlbum, serviceSaveAlbum, serviceRemoveAlbum, serviceUpdateAlbum } from '../../components/http'
+import { serviceAuthorize, serviceGetAlbum, serviceSaveAlbum, serviceRemoveAlbum, serviceUpdateAlbum, serviceGetAllGaleria } from '../../components/http'
 
 import serviceAlbum from 'src/services/serviceAlbum.js'
 
@@ -99,5 +99,21 @@ export const updateAlbum = (store, data) => {
 export const setMessage = (store, data) => {
 
 	store.commit(types[data.mutation], data.message)
+
+}
+
+// Galeria
+
+export const getAllGaleria = (store) => {
+
+	return serviceGetAllGaleria()
+
+	.then(response => response.data)
+
+	.then((data) => {
+
+		store.commit(types.setGaleria, data.data)
+
+	})
 
 }

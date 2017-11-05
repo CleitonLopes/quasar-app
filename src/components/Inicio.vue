@@ -19,6 +19,7 @@ import {
 
 } from 'quasar'
 
+import CpAlbum from './Album.vue'
 import CpForm from './Form.vue'
 
 export default {
@@ -27,31 +28,9 @@ export default {
 
   components: {
 
-    QLayout,
+    QLayout, QToolbar, QToolbarTitle, QTabs, QTab, QTabPane, QSelect, QBtn, QIcon, QField, QUploader, QInput,
 
-    QToolbar,
-
-    QToolbarTitle,
-
-    QTabs,
-
-    QTab,
-
-    QTabPane,
-
-    QSelect,
-
-    QBtn,
-
-    QIcon,
-
-    QField,
-
-    QUploader,
-
-    QInput,
-
-    CpForm
+    CpAlbum, CpForm
 
   },
 
@@ -65,7 +44,20 @@ export default {
 
       },
 
-      select: 1
+      select: 1,
+
+      url: 'http://apiestancia.com.br/api/galeria',
+
+      additionalFields: [
+
+        {
+
+          name: 'album_id',
+          value: 2
+
+        }
+
+      ]
 
     }
 
@@ -75,13 +67,13 @@ export default {
 
   computed: {
 
-    ...mapGetters(['getAlbum'])
+    ...mapGetters(['getAlbum', 'getToken', 'getGaleria'])
 
   },
 
   methods: {
 
-    ...mapActions(['saveAlbum', 'getAllAlbum', 'removeAlbum', 'updateAlbum']),
+    ...mapActions(['saveAlbum', 'getAllAlbum', 'removeAlbum', 'updateAlbum', 'getAllGaleria']),
 
     save () {
 
@@ -127,6 +119,30 @@ export default {
 
       })
 
+    },
+
+    addHeaders () {
+
+     let headers = {
+
+          Authorization: this.getToken
+
+      }
+
+      return headers
+
+    },
+
+    findGaleria () {
+
+      this.getAllGaleria()
+
+      .then(() => {
+
+        //
+
+      })
+
     }
 
   },
@@ -146,19 +162,25 @@ export default {
 
     <q-toolbar slot="header" class="glossy">
 
-      <q-toolbar-title> Bem vindo bezerra </q-toolbar-title>
+      <q-toolbar-title> Bem vindo ! </q-toolbar-title>
 
     </q-toolbar>
 
     <q-tabs>
     	<!-- Tabs - notice slot="title" -->
     	<q-tab slot="title" name="tab-1" icon="folder" />
-    	<q-tab slot="title" name="tab-2" icon="image" />
+      <q-tab slot="title" name="tab-2" icon="cloud_upload" />
+    	<q-tab slot="title" name="tab-3" icon="image" @click="findGaleria()"/>
 
     	<!-- Targets -->
-    	<q-tab-pane name="tab-1">
 
-        <p class="caption">Albuns</p>
+      <q-tab-pane name="tab-1">
+
+        <cp-album />
+
+      </q-tab-pane>
+
+    <!-- 	<q-tab-pane name="tab-1">
 
         <hr>
 
@@ -177,7 +199,7 @@ export default {
         </div>
 
 
-      </q-tab-pane>
+      </q-tab-pane> -->
 
     	<q-tab-pane name="tab-2">
 
@@ -189,9 +211,21 @@ export default {
 
         <q-field icon="add_a_photo" helper="">
 
-          <q-uploader multiple float-label="Escolha a imagem para upload" />
+          <q-uploader :url="url" multiple float-label="Escolha a imagem para upload" :headers="addHeaders()" :additionalFields="additionalFields" @add(files)/>
 
         </q-field>
+
+      </q-tab-pane>
+
+      <q-tab-pane name="tab-3">
+
+      <div>
+        <div class="scrollmenu row">
+          <div v-for="item in getGaleria" class="thumbnail">
+            <img :src="`http://apiestancia.com.br/storage/${item.path}`" width="150px">
+          </div>
+        </div>
+      </div>
 
       </q-tab-pane>
 
@@ -204,11 +238,21 @@ export default {
 
 <style lang="stylus">
 
-.box-button {
+  .box-button {
 
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-around;
-}
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  div.scrollmenu {
+    overflow    : auto;
+    white-space : nowrap;
+  }
+
+  div.scrollmenu .thumbnail {
+    display : block;
+    margin  : 5px;
+  }
 
 </style>

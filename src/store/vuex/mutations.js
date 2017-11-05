@@ -16,9 +16,13 @@ export default {
 
 	[types.setAlbum] (state, data) {
 
-		console.log(data)
-
 		state.album = data
+
+	},
+
+	[types.setGaleria] (state, data) {
+
+		state.galeria = data
 
 	}
 

@@ -87,3 +87,17 @@ export const serviceGetAllGaleria = (data) => {
 	})
 
 }
+
+export const serviceGaleryFindById = (data) => {
+
+	return http.get(`${config.URI}/api/album/${data}`, {
+
+		headers: {
+
+			'Authorization': store.token
+
+		}
+
+	})
+
+}

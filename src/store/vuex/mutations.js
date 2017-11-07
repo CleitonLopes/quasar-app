@@ -24,6 +24,12 @@ export default {
 
 		state.galeria = data
 
+	},
+
+	[types.setGaleryById] (state, data) {
+
+		state.galeria = data
+
 	}
 
 }

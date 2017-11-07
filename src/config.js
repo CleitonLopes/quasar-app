@@ -2,7 +2,9 @@ const dataConfig = () => {
 
 	let data = {
 
-		URI: 'http://apiestancia.com.br'
+		URI: 'http://apiestancia.com.br',
+		URIGALERY: 'http://apiestancia.com.br/api/galeria',
+		URISTORAGE: 'http://apiestancia.com.br/storage/'
 
 	}
 

@@ -2,7 +2,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
 
-import { QSelect, QInput, QBtn } from 'quasar'
+import { QSelect, QInput, QBtn, Alert } from 'quasar'
 
 export default {
 
@@ -48,7 +48,53 @@ export default {
 
 	methods: {
 
-		...mapActions(['getAllAlbum'])
+		...mapActions(['getAllAlbum', 'saveAlbum', 'removeAlbum', 'updateAlbum']),
+
+		save () {
+
+	      this.saveAlbum(this.album)
+
+	      .then(() => {
+
+	        Alert.create({ html: 'Dados salvos com sucesso', color: 'positive' })
+
+	        this.album.titulo = null
+
+	        this.getAllAlbum()
+
+	      })
+
+	    },
+
+	    edit () {
+
+	      let data = { codigo: this.select, album: this.album }
+
+	      this.updateAlbum(data)
+
+	      .then(() => {
+
+	        Alert.create({ html: 'Album alterado com sucesso', color: 'positive' })
+
+	        this.getAllAlbum()
+
+	      })
+
+	    },
+
+	    remove () {
+
+	      this.removeAlbum(this.select)
+
+	      .then(() => {
+
+	        Alert.create({ html: 'Album excluido com sucesso', color: 'positive' })
+
+	        this.getAllAlbum()
+
+	      })
+
+	    }
 
 	},
 
@@ -63,8 +109,9 @@ export default {
 
 <template>
 
-<div>
+	<div>
 
+		<p class="caption">Albuns</p>
 
 		<hr>
 
@@ -74,20 +121,26 @@ export default {
 
 		<div class="row box-button">
 
-			<q-btn round color="primary" icon="add_circle"  />
+			<q-btn round color="primary" icon="add_circle" @click="save" />
 
-			<q-btn round color="secondary" icon="mode_edit" />
+			<q-btn round color="secondary" icon="mode_edit" @click="edit" />
 
-			<q-btn round color="negative" icon="delete"  />
+			<q-btn round color="negative" icon="delete" @click="remove" />
 
 		</div>
 
-
-
-</div>
+	</div>
 
 </template>
 
-<style>
+<style lang="stylus">
+
+.box-button {
+
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+
+}
 
 </style>

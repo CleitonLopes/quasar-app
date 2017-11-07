@@ -1,6 +1,16 @@
 import * as types from './mutations-types'
 
-import { serviceAuthorize, serviceGetAlbum, serviceSaveAlbum, serviceRemoveAlbum, serviceUpdateAlbum, serviceGetAllGaleria } from '../../components/http'
+import {
+
+	serviceAuthorize,
+	serviceGetAlbum,
+	serviceSaveAlbum,
+	serviceRemoveAlbum,
+	serviceUpdateAlbum,
+	serviceGetAllGaleria,
+	serviceGaleryFindById
+
+} from '../../components/http'
 
 import serviceAlbum from 'src/services/serviceAlbum.js'
 
@@ -113,6 +123,24 @@ export const getAllGaleria = (store) => {
 	.then((data) => {
 
 		store.commit(types.setGaleria, data.data)
+
+	})
+
+}
+
+export const aFindById = (store, data) => {
+
+	console.log(data)
+
+	return serviceGaleryFindById(data)
+
+	.then(response => response.data)
+
+	.then((data) => {
+
+		console.log(data)
+
+		store.commit(types.setGaleryById, data)
 
 	})
 

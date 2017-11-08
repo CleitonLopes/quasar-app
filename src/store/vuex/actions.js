@@ -8,7 +8,8 @@ import {
 	serviceRemoveAlbum,
 	serviceUpdateAlbum,
 	serviceGetAllGaleria,
-	serviceGaleryFindById
+	serviceGaleryFindById,
+	serviceRemoveGaleryById
 
 } from '../../components/http'
 
@@ -40,7 +41,7 @@ export const authorize = (store, data) => {
 }
 
 // Album
-export const getAllAlbum = (store) => {
+export const aGetAllAlbum = (store) => {
 
 	return serviceGetAlbum()
 
@@ -50,57 +51,97 @@ export const getAllAlbum = (store) => {
 
 		let service = serviceAlbum()
 
-		console.log(service.createAlbum(data.data))
-
 		store.commit(types.setAlbum, service.createAlbum(data.data))
 
 	})
 
 	.catch((error) => {
 
-		console.log(error)
+		return error
 
 	})
 
 }
 
-export const saveAlbum = (store, data) => {
+export const aSaveAlbum = (store, data) => {
 
 	return serviceSaveAlbum(data)
 
-	.then(response => response.data)
+	.then((response) => {
 
-	.then(data => {
+		if (response.status === 200) {
 
-		//
+			let data = {
+
+				resultado: 'Dados salvos com sucesso !'
+
+			}
+
+			return data
+
+		}
+
+	})
+
+	.catch((error) => {
+
+		return error
 
 	})
 
 }
 
-export const removeAlbum = (store, data) => {
-
-	return serviceRemoveAlbum(data)
-
-	.then(response => response.data)
-
-	.then((data) => {
-
-		//
-
-	})
-
-}
-
-export const updateAlbum = (store, data) => {
+export const aUpdateAlbum = (store, data) => {
 
 	return serviceUpdateAlbum(data)
 
-	.then(response => response.data)
+	.then((response) => {
 
-	.then((data) => {
+		if (response.status === 200) {
 
-		//
+			let data = {
+
+				resultado: 'Album alterado com sucesso !'
+
+			}
+
+			return data
+
+		}
+
+	})
+
+	.catch((error) => {
+
+		return error
+
+	})
+
+}
+
+export const aRemoveAlbum = (store, data) => {
+
+	return serviceRemoveAlbum(data)
+
+	.then((response) => {
+
+		if (response.status === 200) {
+
+			let data = {
+
+				resultado: 'Album deletado com sucesso !'
+
+			}
+
+			return data
+
+		}
+
+	})
+
+	.catch((error) => {
+
+		return error
 
 	})
 
@@ -126,11 +167,15 @@ export const getAllGaleria = (store) => {
 
 	})
 
+	.catch((error) => {
+
+		return error
+
+	})
+
 }
 
 export const aFindById = (store, data) => {
-
-	console.log(data)
 
 	return serviceGaleryFindById(data)
 
@@ -138,9 +183,37 @@ export const aFindById = (store, data) => {
 
 	.then((data) => {
 
-		console.log(data)
-
 		store.commit(types.setGaleryById, data)
+
+	})
+
+	.catch((error) => {
+
+		return error
+
+	})
+
+}
+
+export const aRemoveGaleryById = (store, data) => {
+
+	return serviceRemoveGaleryById(data)
+
+	.then(response => response.data)
+
+	.then((data) => {
+
+		if (data.status === 200) {
+
+			return data
+
+		}
+
+	})
+
+	.catch((error) => {
+
+		return error
 
 	})
 

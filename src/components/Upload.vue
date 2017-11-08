@@ -1,6 +1,6 @@
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import { QSelect, QInput, QBtn, QUploader, QField } from 'quasar'
 
@@ -41,8 +41,6 @@ export default {
 	},
 
 	methods: {
-
-		...mapActions(['']),
 
 		addHeaders () {
 

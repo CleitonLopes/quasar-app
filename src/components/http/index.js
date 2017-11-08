@@ -42,8 +42,6 @@ export const serviceRemoveAlbum = (data) => {
 
 export const serviceSaveAlbum = (data) => {
 
-	console.log(data)
-
 	return http.post(`${config.URI}/api/album`, data, {
 
 		headers: {
@@ -57,8 +55,6 @@ export const serviceSaveAlbum = (data) => {
 }
 
 export const serviceUpdateAlbum = (data) => {
-
-	console.log(data)
 
 	return http.put(`${config.URI}/api/album/${data.codigo}`, data.album, {
 
@@ -91,6 +87,20 @@ export const serviceGetAllGaleria = (data) => {
 export const serviceGaleryFindById = (data) => {
 
 	return http.get(`${config.URI}/api/album/${data}`, {
+
+		headers: {
+
+			'Authorization': store.token
+
+		}
+
+	})
+
+}
+
+export const serviceRemoveGaleryById = (data) => {
+
+	return http.delete(`${config.URI}/api/galeria/${data.idalbum}/${data.idgaleria}`, {
 
 		headers: {
 

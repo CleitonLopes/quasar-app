@@ -2,7 +2,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
 
-import { QSelect, QInput, QBtn, Alert } from 'quasar'
+import { QSelect, QInput, QBtn, Toast } from 'quasar'
 
 export default {
 
@@ -18,7 +18,7 @@ export default {
 
       		},
 
-      		select: 1
+      		selected: 1
 
 		}
 
@@ -48,19 +48,19 @@ export default {
 
 	methods: {
 
-		...mapActions(['getAllAlbum', 'saveAlbum', 'removeAlbum', 'updateAlbum']),
+		...mapActions(['aGetAllAlbum', 'aSaveAlbum', 'aRemoveAlbum', 'aUpdateAlbum']),
 
 		save () {
 
-	      this.saveAlbum(this.album)
+	      this.aSaveAlbum(this.album)
 
-	      .then(() => {
+	      .then((data) => {
 
-	        Alert.create({ html: 'Dados salvos com sucesso', color: 'positive' })
+	        Toast.create(data.resultado)
 
 	        this.album.titulo = null
 
-	        this.getAllAlbum()
+	        this.aGetAllAlbum()
 
 	      })
 
@@ -68,15 +68,17 @@ export default {
 
 	    edit () {
 
-	      let data = { codigo: this.select, album: this.album }
+	      let data = { codigo: this.selected, album: this.album }
 
-	      this.updateAlbum(data)
+	      this.aUpdateAlbum(data)
 
-	      .then(() => {
+	      .then((data) => {
 
-	        Alert.create({ html: 'Album alterado com sucesso', color: 'positive' })
+	        Toast.create(data.resultado)
 
-	        this.getAllAlbum()
+	        this.album.titulo = null
+
+	        this.aGetAllAlbum()
 
 	      })
 
@@ -84,13 +86,13 @@ export default {
 
 	    remove () {
 
-	      this.removeAlbum(this.select)
+	      this.aRemoveAlbum(this.selected)
 
-	      .then(() => {
+	      .then((data) => {
 
-	        Alert.create({ html: 'Album excluido com sucesso', color: 'positive' })
+	      	Toast.create(data.resultado)
 
-	        this.getAllAlbum()
+	        this.aGetAllAlbum()
 
 	      })
 
@@ -100,7 +102,7 @@ export default {
 
 	mounted () {
 
-		this.getAllAlbum()
+		this.aGetAllAlbum()
 
 	}
 
@@ -115,7 +117,7 @@ export default {
 
 		<hr>
 
-		<q-select stack-label="" v-model="select" :options="getAlbum" />
+		<q-select stack-label="" v-model="selected" :options="getAlbum" />
 
 		<q-input stack-label="Titulo" v-model="album.titulo"/>
 

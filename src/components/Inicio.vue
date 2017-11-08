@@ -60,13 +60,13 @@ export default {
 
   methods: {
 
-    ...mapActions(['getAllAlbum'])
+    ...mapActions(['aGetAllAlbum'])
 
   },
 
   mounted () {
 
-    this.getAllAlbum()
+    this.aGetAllAlbum()
 
   }
 

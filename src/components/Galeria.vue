@@ -2,7 +2,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
 
-import { QSelect } from 'quasar'
+import { QSelect, Dialog, Toast } from 'quasar'
 
 import serviceConfig from 'src/config.js'
 
@@ -22,7 +22,7 @@ export default {
 
 			},
 
-      		select: 1,
+      		selected: 1,
 
 			config
 
@@ -36,25 +36,72 @@ export default {
 
 	computed: {
 
-		...mapGetters(['getAlbum', 'getToken', 'getGaleria']),
-
-		getterGaleryByID () {
-
-			return this.getGaleria.galeria !== null
-
-		}
+		...mapGetters(['getAlbum', 'getToken', 'getGaleria'])
 
 	},
 
 	methods: {
 
-		...mapActions(['getAllAlbum', 'getAllGaleria', 'aFindById']),
+		...mapActions(['getAllGaleria', 'aFindById', 'aRemoveGaleryById']),
 
 		findById () {
 
-			this.aFindById(this.select)
+			this.aFindById(this.selected)
 
 			.then(() => {})
+
+		},
+
+		remove (value) {
+
+			let data = {
+
+				idalbum: this.selected,
+				idgaleria: value
+
+			}
+
+			Dialog.create({
+
+				title: 'Atenção',
+				message: 'Deseja realmente excluir a imagem ?',
+
+				buttons: [{
+
+					label: 'Cancelar',
+					color: 'negative',
+					outline: true,
+					style: 'text-decoration: underline',
+
+					handler: () => {
+
+						Toast.create('cancelado...')
+
+					}
+
+				}, {
+
+					label: 'Confirma',
+					raised: true,
+					color: 'positive',
+
+					handler: () => {
+
+						this.aRemoveGaleryById(data)
+
+						.then((data) => {
+
+							Toast.create(data.resultado)
+
+							this.findById(this.selected)
+
+						})
+
+					}
+
+				}]
+
+			})
 
 		}
 
@@ -75,15 +122,13 @@ export default {
 
 		<p class="caption">Albuns</p>
 
-		<p>{{getterGaleryByID}}</p>
-
 		<hr>
 
-		<q-select stack-label="Escolha o album para buscar as imagens" v-model="select" :options="getAlbum" @change="findById(select)" />
+		<q-select stack-label="Escolha o album para buscar as imagens" v-model="selected" :options="getAlbum" @change="findById(selected)" />
 
 		<div class="scrollmenu row">
 			<div v-for="item in getGaleria.galeria" class="thumbnail">
-				<img :src="`${config.URISTORAGE}/${item.path}`" width="150px">
+				<img :src="`${config.URISTORAGE}/${item.path}`" width="150px" @click="remove(item.id)">
 			</div>
 		</div>
 

@@ -86,7 +86,7 @@ export default {
     <q-tabs>
 
 
-    	<q-tab slot="title" name="album" icon="folder" />
+    	<q-tab slot="title" name="album" icon="folder" active/>
       <q-tab slot="title" name="upload" icon="cloud_upload" />
     	<q-tab slot="title" name="galeria" icon="image" />
 

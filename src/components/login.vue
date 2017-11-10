@@ -9,7 +9,8 @@ import {
 	QToolbarTitle,
 	QInput,
 	QField,
-	QBtn
+	QBtn,
+	Toast
 
 } from 'quasar'
 
@@ -54,7 +55,7 @@ export default {
 		login () {
 
 			this.dados = JSON.parse(JSON.stringify(this.getOauth))
-			this.dados.username = this.username
+			this.dados.username = `${this.username}@bredas.com.br`
 			this.dados.password = this.password
 
 			this.labelLogin = 'Aguarde...'
@@ -63,17 +64,21 @@ export default {
 
 			this.authorize(this.dados)
 
-				.then(() => {
+			.then((data) => {
 
-					this.labelLogin = 'Login'
+				this.labelLogin = 'Login'
 
-					if (this.getToken !== null) {
+				if (this.getToken !== null) {
 
-						this.$router.push({ path: 'Inicio' })
+					this.$router.push({ path: 'Inicio' })
 
-					}
+				} else {
 
-				})
+					Toast.create(data)
+
+				}
+
+			})
 
 		},
 
@@ -103,6 +108,9 @@ export default {
 	    </q-toolbar>
 
 
+	    <div class="box-login">
+
+
 		<p class="caption login">Login</p>
 
 		<hr>
@@ -112,6 +120,8 @@ export default {
 		<q-input v-model="password" type="password" :before="[{icon: 'vpn_key', handler () {}}]" />
 
 		<q-btn color="primary" :disable="!isValid" class="full-width" @click="login"> {{labelLogin}} </q-btn>
+
+	</div>
 
 		<q-field v-if="getErrorLogin !== null" icon="error" :label="getErrorLogin"></q-field>
 
@@ -125,6 +135,10 @@ export default {
 
 	margin-top: 40px;
 
+}
+
+.box-login {
+	margin: 30px 30px;
 }
 
 </style>

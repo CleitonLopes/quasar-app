@@ -67,6 +67,12 @@ export default {
 
 	    	return additionalFields
 
+	    },
+
+	    finish () {
+
+	    	// console.log(this.$refs.uploader.files.remove)
+
 	    }
 
 	},
@@ -88,7 +94,7 @@ export default {
 
 		<q-field icon="add_a_photo" helper="">
 
-			<q-uploader :url="`${config.URIGALERY}`" multiple float-label="Escolha a imagem para upload" :headers="addHeaders()" :additionalFields="addField()" @add(files)/>
+			<q-uploader ref="uploader" :url="`${config.URIGALERY}`" multiple float-label="Escolha a imagem para upload" :headers="addHeaders()" :additionalFields="addField()" @add(files) @finish="finish"/>
 
 		</q-field>
 

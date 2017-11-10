@@ -30,11 +30,7 @@ export const authorize = (store, data) => {
 
 	.catch((error) => {
 
-		if (error.response) {
-
-			store.commit(types.setErrorLogin, error.response.data.message)
-
-		}
+		return error.response.data.message
 
 	})
 

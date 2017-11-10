@@ -2,7 +2,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
 
-import { QSelect, Dialog, Toast } from 'quasar'
+import { QSelect, Dialog, Toast, QGallery } from 'quasar'
 
 import serviceConfig from 'src/config.js'
 
@@ -22,6 +22,11 @@ export default {
 
 			},
 
+			galery: [
+				'http://api.estanciabreda.com.br/storage/1/HUgblMZlK3nqp6Yyc5y7fTMMg0fCFJG6o9NkWpFP.jpeg',
+				'http://api.estanciabreda.com.br/storage/1/HUgblMZlK3nqp6Yyc5y7fTMMg0fCFJG6o9NkWpFP.jpeg'
+			],
+
       		selected: 1,
 
 			config
@@ -30,7 +35,7 @@ export default {
 
 	},
 
-	components: { QSelect },
+	components: { QSelect, QGallery },
 
 	props: {},
 
@@ -42,7 +47,7 @@ export default {
 
 	methods: {
 
-		...mapActions(['getAllGaleria', 'aFindById', 'aRemoveGaleryById']),
+		...mapActions(['aFindById', 'aRemoveGaleryById']),
 
 		findById () {
 
@@ -132,11 +137,15 @@ export default {
 			</div>
 		</div>
 
+		<!-- <q-gallery infinite fullscreen :src="galery" @click="teste"/> -->
+
+
 	</div>
 
 </template>
 
 <style lang="stylus">
+
 
 div.scrollmenu
 {

@@ -6,4 +6,4 @@ export const getErrorLogin = ({errorLogin}) => errorLogin
 
 export const getAlbum = ({album}) => album
 
-export const getGaleria = ({galeria}) => galeria
+export const getGalery = ({galery}) => galery

@@ -20,15 +20,15 @@ export default {
 
 	},
 
-	[types.setGaleria] (state, data) {
+	[types.clearGalery] (state) {
 
-		state.galeria = data
+		state.galery = []
 
 	},
 
 	[types.setGaleryById] (state, data) {
 
-		state.galeria = data
+		state.galery = data
 
 	}
 

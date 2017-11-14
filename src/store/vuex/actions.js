@@ -7,7 +7,6 @@ import {
 	serviceSaveAlbum,
 	serviceRemoveAlbum,
 	serviceUpdateAlbum,
-	serviceGetAllGaleria,
 	serviceGaleryFindById,
 	serviceRemoveGaleryById
 
@@ -151,23 +150,9 @@ export const setMessage = (store, data) => {
 
 // Galeria
 
-export const getAllGaleria = (store) => {
+export const aClearGalery = (store) => {
 
-	return serviceGetAllGaleria()
-
-	.then(response => response.data)
-
-	.then((data) => {
-
-		store.commit(types.setGaleria, data.data)
-
-	})
-
-	.catch((error) => {
-
-		return error
-
-	})
+	store.commit(types.clearGalery)
 
 }
 

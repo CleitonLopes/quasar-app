@@ -18,7 +18,7 @@ export default {
 
       		},
 
-      		selected: 1
+      		selected: null
 
 		}
 
@@ -123,11 +123,11 @@ export default {
 
 		<div class="row box-button">
 
-			<q-btn round color="primary" icon="add_circle" @click="save" />
+			<q-btn :disable="album.titulo === null" round color="primary" icon="add_circle" @click="save" />
 
-			<q-btn round color="secondary" icon="mode_edit" @click="edit" />
+			<q-btn :disable="album.titulo === null" round color="secondary" icon="mode_edit" @click="edit" />
 
-			<q-btn round color="negative" icon="delete" @click="remove" />
+			<q-btn :disable="selected === null" round color="negative" icon="delete" @click="remove" />
 
 		</div>
 

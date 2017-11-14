@@ -30,7 +30,7 @@ export default new VueRouter({
 
   routes: [
 
-    { path: '/', component: load('login') },
+    { path: '/', component: load('Inicio') },
 
     { path: '/inicio', component: load('Inicio') },
 

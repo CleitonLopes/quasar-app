@@ -22,12 +22,7 @@ export default {
 
 			},
 
-			galery: [
-				'http://api.estanciabreda.com.br/storage/1/HUgblMZlK3nqp6Yyc5y7fTMMg0fCFJG6o9NkWpFP.jpeg',
-				'http://api.estanciabreda.com.br/storage/1/HUgblMZlK3nqp6Yyc5y7fTMMg0fCFJG6o9NkWpFP.jpeg'
-			],
-
-      		selected: 1,
+      		selected: null,
 
 			config
 
@@ -41,13 +36,13 @@ export default {
 
 	computed: {
 
-		...mapGetters(['getAlbum', 'getToken', 'getGaleria'])
+		...mapGetters(['getAlbum', 'getToken', 'getGalery'])
 
 	},
 
 	methods: {
 
-		...mapActions(['aFindById', 'aRemoveGaleryById']),
+		...mapActions(['aFindById', 'aRemoveGaleryById', 'aClearGalery']),
 
 		findById () {
 
@@ -114,7 +109,17 @@ export default {
 
 	mounted () {
 
-      this.findById()
+	  this.aClearGalery()
+
+	  .then(() => {
+
+	  	if (this.selected !== null) {
+
+	  		this.findById()
+
+	  	}
+
+	  })
 
 	}
 
@@ -132,7 +137,7 @@ export default {
 		<q-select stack-label="Escolha o album para buscar as imagens" v-model="selected" :options="getAlbum" @change="findById(selected)" />
 
 		<div class="scrollmenu row">
-			<div v-for="item in getGaleria.galeria" class="thumbnail">
+			<div v-for="item in getGalery.galeria" class="thumbnail">
 				<img :src="`${config.URISTORAGE}/${item.path}`" width="150px" @click="remove(item.id)">
 			</div>
 		</div>

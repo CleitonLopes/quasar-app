@@ -22,7 +22,7 @@ export default {
 
 			},
 
-      		select: 1,
+      		select: null,
 
 			config
 

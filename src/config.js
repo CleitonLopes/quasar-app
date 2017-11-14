@@ -2,8 +2,6 @@ const dataConfig = () => {
 
 	let dev = true
 
-	// client_secret: 'DOY8Ne2y6GbWcnVJKAThKHYkgl5O1GQf81mZdpWR' prod
-
 	let data = {}
 
 	if (dev) {

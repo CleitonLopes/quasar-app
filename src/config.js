@@ -1,6 +1,6 @@
 const dataConfig = () => {
 
-	let dev = true
+	let dev = false
 
 	let data = {}
 

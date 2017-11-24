@@ -8,7 +8,7 @@ export default {
 
 		grant_type: 'password',
 		client_id: '2',
-		client_secret: 'Cl2RGhjurNzE6UIH786VSZ8DyMAJpDaZb6Vmdbei',
+		client_secret: 'I6jE7QlIDzg8W5ZbStzr7tmOuE6DuatAeM3eDMFI', // 'Cl2RGhjurNzE6UIH786VSZ8DyMAJpDaZb6Vmdbei',
 		scope: ''
 
 	},
